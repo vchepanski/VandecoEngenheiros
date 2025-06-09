@@ -9,19 +9,19 @@ use App\Http\Controllers\TaskController;
 use App\Http\Controllers\SubtaskController;
 
 
-Route::match(['get', 'post'], '/access', function (Request $request) {
-    if ($request->isMethod('post')) {
-        if ($request->input('password') === 'Dev-Vanderlei@123') {
-            session(['access_granted' => true]);
-            return redirect()->intended('/tasks');
-        }
+// Route::match(['get', 'post'], '/access', function (Request $request) {
+//     if ($request->isMethod('post')) {
+//         if ($request->input('password') === 'Dev-Vanderlei@123') {
+//             session(['access_granted' => true]);
+//             return redirect()->intended('/tasks');
+//         }
 
-        return back()->withErrors(['password' => 'Senha incorreta.']);
-    }
+//         return back()->withErrors(['password' => 'Senha incorreta.']);
+//     }
 
-    return response()->view('auth.access');
-})->name('access');
-Route::middleware('protected')->group(function () {
+//     return response()->view('auth.access');
+// })->name('access');
+// Route::middleware('protected')->group(function () {
 Route::resource('usuarios', UserController::class);
 Route::get('/', [TaskController::class, 'index'])->name('tasks.index');
 Route::get('/tasks/create', [TaskController::class, 'create'])->name('tasks.create');
@@ -33,4 +33,4 @@ Route::put('/tasks/{task}', [TaskController::class, 'update'])->name('tasks.upda
 Route::post('/tasks/{task}/subtasks', [SubtaskController::class, 'store'])->name('subtasks.store');
 Route::put('/subtasks/{subtask}', [SubtaskController::class, 'update'])->name('subtasks.update');
 Route::delete('/subtasks/{subtask}', [SubtaskController::class, 'destroy'])->name('subtasks.destroy');
-});
+// });
