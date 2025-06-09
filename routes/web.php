@@ -23,7 +23,7 @@ Route::match(['get', 'post'], '/access', function (Request $request) {
 })->name('access');
 Route::middleware('protected')->group(function () {
 Route::resource('usuarios', UserController::class);
-Route::get('/', [TaskController::class, 'index'])->name('tasks.index');
+Route::get('/tasks', [TaskController::class, 'index'])->name('tasks.index');
 Route::get('/tasks/create', [TaskController::class, 'create'])->name('tasks.create');
 Route::post('/tasks', [TaskController::class, 'store'])->name('tasks.store');
 Route::get('/tasks/{task}', [TaskController::class, 'show'])->name('tasks.show');
