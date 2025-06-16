@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\UserController;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
@@ -8,7 +9,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\SubtaskController;
 
-
+Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 Route::match(['get', 'post'], '/access', function (Request $request) {
     if ($request->isMethod('post')) {
         if ($request->input('password') === 'Dev-Vanderlei@123') {

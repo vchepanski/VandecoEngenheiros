@@ -1,7 +1,12 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
+<div class="container position-relative">
+    {{-- Card do clima no canto superior direito --}}
+    <div class="top-0 position-absolute end-0" style="z-index: 1000;">
+        @include('components.weather-card', ['data' => $data])
+    </div>
+
     <div class="mb-4 d-flex justify-content-between align-items-center">
         <h2>All Tasks</h2>
         <a href="{{ route('tasks.create') }}" class="btn btn-primary">+ New Task</a>

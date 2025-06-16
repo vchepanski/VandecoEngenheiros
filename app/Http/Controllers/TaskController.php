@@ -4,14 +4,18 @@ namespace App\Http\Controllers;
 
 use App\Models\Task;
 use Illuminate\Http\Request;
+use App\Services\WeatherService;
 
 class TaskController extends Controller
 {
-        public function index()
+    public function index(WeatherService $weather)
     {
         $tasks = Task::latest()->get();
-        return view('tasks.index', compact('tasks'));
+        $data = $weather->getCurrentWeather('Palmeira'); // ou qualquer cidade desejada
+
+        return view('tasks.index', compact('tasks', 'data'));
     }
+
 
     public function create()
     {
