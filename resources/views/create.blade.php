@@ -15,7 +15,7 @@
         </div>
     @endif
 
-    <form action="{{ route('usuarios.store') }}" method="POST">
+    <form action="{{ route('users.store') }}" method="POST">
         @csrf
 
         <div class="mb-3">
@@ -42,7 +42,7 @@
         </div>
 
         <button type="submit" class="btn btn-primary">Salvar</button>
-        <a href="{{ route('usuarios.index') }}" class="btn btn-secondary">Voltar</a>
+        <a href="{{ route('users.index') }}" class="btn btn-secondary">Voltar</a>
     </form>
 </div>
 @endsection
