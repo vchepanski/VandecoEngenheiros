@@ -3,7 +3,7 @@
   <div class="p-4">
     <h2 class="mb-4 text-2xl font-bold text-white">Despesas</h2>
 
-    <!-- Botão para Categorias de Despesa -->
+    <!-- Botões de Ação -->
     <div class="flex justify-end mb-4 space-x-2">
       <RouterLink
         to="/expenses/create"
@@ -39,7 +39,15 @@
           >
             <td class="px-4 py-3">{{ expense.date }}</td>
             <td class="px-4 py-3">{{ expense.user.name }}</td>
-            <td class="px-4 py-3">{{ getCategoryName(expense.expense_category_id) }}</td>
+            <td class="px-4 py-3">
+              <div>{{ getCategoryName(expense.expense_category_id) }}</div>
+              <div
+                v-if="getCategoryParent(expense.expense_category_id)"
+                class="text-xs text-gray-400 mt-1"
+              >
+                Pai: {{ getCategoryParent(expense.expense_category_id) }}
+              </div>
+            </td>
             <td class="max-w-xs px-4 py-3 truncate">{{ expense.description || '—' }}</td>
             <td class="px-4 py-3 font-semibold text-right text-red-500">
               {{ Number(expense.value).toFixed(2) }}
@@ -47,13 +55,13 @@
             <td class="px-4 py-3 space-x-2 text-center">
               <button
                 @click="editExpense(expense)"
-                class="px-3 py-1 text-xs bg-gray-600 rounded hover:bg-gray-700"
+                class="px-3 py-1 text-xs bg-gray-600 rounded hover:bg-gray-700 transition"
               >
                 Editar
               </button>
               <button
                 @click="deleteExpense(expense.id)"
-                class="px-3 py-1 text-xs bg-red-600 rounded hover:bg-red-700"
+                class="px-3 py-1 text-xs bg-red-600 rounded hover:bg-red-700 transition"
               >
                 Excluir
               </button>
@@ -91,11 +99,21 @@ const flatten = (cats, level = 0) =>
     }
     return acc
   }, [])
+
 const flatCategories = computed(() => flatten(categories.value))
 
 const getCategoryName = id => {
   const cat = flatCategories.value.find(c => c.id === id)
   return cat ? cat.name : '— sem categoria —'
+}
+
+const getCategoryParent = id => {
+  for (const root of categories.value) {
+    if (root.children?.some(child => child.id === id)) {
+      return root.name
+    }
+  }
+  return null
 }
 
 const editExpense = expense =>
