@@ -1,8 +1,8 @@
 <?php
 
-use App\Http\Controllers\API\V1\ExpenseCategoryController;
-use App\Http\Controllers\API\V1\ExpenseController;
-use App\Http\Controllers\API\V1\IncomeCategoryController;
+use App\Http\Controllers\Api\V1\ExpenseCategoryController;
+use App\Http\Controllers\Api\V1\ExpenseController;
+use App\Http\Controllers\Api\V1\IncomeCategoryController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\V1\UserController;
