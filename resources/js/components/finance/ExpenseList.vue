@@ -18,7 +18,21 @@
         Categorias de Despesa
       </RouterLink>
     </div>
-
+    <div class="mb-4">
+      <h3 class="text-lg font-semibold text-white mb-3 text-center">Totais por Usuário</h3>
+      <div class="flex justify-center">
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+          <div
+            v-for="(total, user) in totalsByUser"
+            :key="user"
+            class="flex flex-col items-center bg-[#0F1115] p-4 rounded-lg shadow-lg"
+          >
+            <span class="text-sm text-gray-400 mb-1">{{ user }}</span>
+            <span class="text-2xl font-bold text-red-500">R$ {{ total.toFixed(2) }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
     <div class="overflow-x-auto">
       <table class="min-w-full bg-[#1A1D23] text-[#E4E7EB] rounded-lg overflow-hidden">
         <thead class="bg-[#0F1115]">
@@ -124,4 +138,13 @@ const deleteExpense = async id => {
   await axios.delete(`/api/v1/expenses/${id}`)
   expenses.value = expenses.value.filter(e => e.id !== id)
 }
+
+const totalsByUser = computed(() => {
+  return expenses.value.reduce((acc, expense) => {
+    const name = expense.user?.name || '— sem usuário —'
+    const v = parseFloat(expense.value) || 0
+    acc[name] = (acc[name] || 0) + v
+    return acc
+  }, {})
+})
 </script>
