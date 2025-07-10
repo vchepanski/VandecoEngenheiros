@@ -12,6 +12,9 @@ import ExpenseCategoryCreate from '../components/finance/ExpenseCategoryCreate.v
 import ExpenseCategoryList from '../components/finance/ExpenseCategoryList.vue'
 import ExpenseCreate from '../components/finance/ExpenseCreate.vue'
 import ExpenseList   from '../components/finance/ExpenseList.vue'
+import ExpenseEdit   from '../components/finance/ExpenseEdit.vue'
+import ExpenseCategoryEdit from '@/components/finance/ExpenseCategoryEdit.vue'
+import Dashboard from '@/components/Dashboard.vue'
 
 const routes = [
     {
@@ -27,8 +30,11 @@ const routes = [
             { path: 'income-categories', name: 'incomeCategories.index', component: IncomeCategoryList },
             { path: 'expense-categories', name: 'expenseCategories.index', component: ExpenseCategoryList },
             { path: 'expense-categories/create', name: 'expenseCategories.create', component: ExpenseCategoryCreate },
-            { path: 'expenses',          name:'expenses.index', component: ExpenseList   },
+            { path: 'expenses', name:'expenses.index', component: ExpenseList },
             { path: 'expenses/create',    name: 'expenses.create', component: ExpenseCreate },
+            { path: 'expenses/:id/edit', name: 'expenses.edit', component: ExpenseEdit,props: true},
+            { path: 'expense-categories/:id/edit', name:'expense-categories.edit',component:ExpenseCategoryEdit, props: true},
+            { path: '/dashboard', name: 'dashboard', component: Dashboard},
         ]
     }
 ]

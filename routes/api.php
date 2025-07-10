@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\V1\DashboardController;
 use App\Http\Controllers\Api\V1\ExpenseCategoryController;
 use App\Http\Controllers\Api\V1\ExpenseController;
 use App\Http\Controllers\Api\V1\IncomeCategoryController;
@@ -18,4 +19,5 @@ Route::prefix('v1')->group(function () {
     Route::apiResource('income-categories',  IncomeCategoryController::class);
     Route::apiResource('expense-categories', ExpenseCategoryController::class);
     Route::apiResource('expenses', ExpenseController::class);
+     Route::get('dashboard', [DashboardController::class, 'index']);
 });
