@@ -8,10 +8,23 @@ use Illuminate\Http\Request;
 
 class ExpenseController extends Controller
 {
-    public function index()
-    {
-        return Expense::with('expenseCategory','user')->get();
+    public function index(Request $request){
+        $query = Expense::with('expenseCategory', 'user');
+
+        if ($request->filled('mes')) {
+            $mes = $request->mes;
+            $query->whereYear('created_at', substr($mes, 0, 4))
+                ->whereMonth('created_at', substr($mes, 5, 2));
+        }
+
+        $sort = $request->get('sort', 'created_at');
+        $dir  = $request->get('direction', 'desc');
+        $query->orderBy($sort, $dir);
+
+        $perPage = $request->get('per_page', 20);
+        return $query->paginate($perPage);
     }
+
 
     public function store(Request $request)
     {

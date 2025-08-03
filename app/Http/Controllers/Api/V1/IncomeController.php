@@ -8,9 +8,16 @@ use Illuminate\Http\Request;
 
 class IncomeController extends Controller
 {
-    public function index()
-    {
-        return response()->json(Income::with('incomeCategory', 'user')->latest()->get());
+    public function index(Request $request){
+        $query = Income::with('incomeCategory', 'user');
+
+        if ($request->filled('mes')) {
+            $mes = $request->mes;
+            $query->whereYear('created_at', substr($mes, 0, 4))
+                ->whereMonth('created_at', substr($mes, 5, 2));
+        }
+
+        return $query->get();
     }
 
     public function store(Request $request)
