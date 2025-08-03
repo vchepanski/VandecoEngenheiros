@@ -8,7 +8,8 @@ use Illuminate\Http\Request;
 
 class ExpenseController extends Controller
 {
-    public function index(Request $request){
+    public function index(Request $request)
+    {
         $query = Expense::with('expenseCategory', 'user');
 
         if ($request->filled('mes')) {
@@ -17,14 +18,8 @@ class ExpenseController extends Controller
                 ->whereMonth('created_at', substr($mes, 5, 2));
         }
 
-        $sort = $request->get('sort', 'created_at');
-        $dir  = $request->get('direction', 'desc');
-        $query->orderBy($sort, $dir);
-
-        $perPage = $request->get('per_page', 20);
-        return $query->paginate($perPage);
+        return $query->get();
     }
-
 
     public function store(Request $request)
     {
